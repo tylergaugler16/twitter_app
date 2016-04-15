@@ -22,4 +22,18 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
   		assert_template 'users/new'
   	end
 
+
+  	test "valid user signup information" do
+  		get signup_path
+  		#the 1 is an optional param. it means, there should be a difference of 1.
+  		assert_difference 'User.count',1  do 
+  			post_via_redirect users_path, user: { name:  "Example User",
+                                            email: "user@example.com",
+                                            password:              "password",
+                                            password_confirmation: "password" }
+
+  		end
+  		assert_template 'users/show'
+  	end
+
 end
